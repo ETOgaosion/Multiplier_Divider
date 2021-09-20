@@ -6,18 +6,10 @@ Homework of Computer Architecture, using Wallace tree and Booth Algorithm to bui
 #### 软件架构
 软件架构说明
 
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  clone后将project_multiplier.srcs文件夹下的sim和source中文件分别导入vivado工程
+2.  进行仿真，查看运行结果，比对res与ref_res即可判断正误
 
 #### 参与贡献
 
