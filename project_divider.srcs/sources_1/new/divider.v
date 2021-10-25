@@ -51,7 +51,6 @@ module divider(
     wire [ 5: 0]    pos_dividend;
     wire [ 5: 0]    pos_divisor;
     wire [ 5: 0]    skip_pos;
-    wire [ 5: 0]    skip_pos_sign;
     wire [ 5: 0]    skip_pos_mid;
 
     reg  [ 5: 0]    time_i;
@@ -89,9 +88,8 @@ module divider(
     find_64 find_first_1_in_dividend(.x(dividend_r[0]),.y(pos_dividend));
     find_33 find_first_1_in_divisor (.x(divisor),.y(pos_divisor));
 
-    assign skip_pos_mid = pos_divisor - pos_dividend + 6'd31;
-    assign skip_pos_sign = skip_pos_mid - 6'd31;
-    assign skip_pos = skip_pos_sign[5] ? skip_pos_mid : 6'd31;
+    assign skip_pos_mid = pos_divisor - pos_dividend;
+    assign skip_pos = skip_pos_mid[5] ? skip_pos_mid + 6'd31 : 6'd31;
 
 
     minus div_minor0(   .A(dividend_r[0][63:31]),
