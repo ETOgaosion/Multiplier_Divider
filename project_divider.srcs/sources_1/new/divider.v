@@ -77,7 +77,7 @@ module divider(
             dividend_r[0][63:0]    <= {32'b0, X[31:0]};
         end else if(!dividend_added) begin
             for(time_j = 1; time_j <= skip_pos && time_j < 6'd32 ; time_j = time_j + 1) begin
-                dividend_r[time_j[4:0]][63:0] <= {32'b0, X[31:0]};
+                dividend_r[time_j[4:0]][63:0] = {32'b0, X[31:0]};
             end
             dividend_added <= 1'b1;
         end else if(time_i != 6'd32) begin
