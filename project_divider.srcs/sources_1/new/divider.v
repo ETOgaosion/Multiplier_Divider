@@ -93,13 +93,33 @@ module divider(
     assign skip_pos_sign = skip_pos_mid - 6'd31;
     assign skip_pos = skip_pos_sign[5] ? skip_pos_mid : 6'd31;
 
+
+    minus div_minor0(   .A(dividend_r[0][63:31]),
+                        .B(divisor),
+                        .remain_A(dividend_r[0][30: 0]),
+                        .S(S[31]),
+                        .new_A(dividend_w[0][63:31]),
+                        .old_A(dividend_w[0][30: 0]));
+    
     genvar i;
     generate
-        for(i = 0; i < 32; i = i + 1) begin
-            minor div_minor(.A(dividend_r[i]), .B(divisor),.shift(i),.S(S[31-i]),.new_A(dividend_w[i]));
+        for(i = 1; i < 31; i = i + 1) begin
+            minus div_minor(.A(dividend_r[i][63-i:31-i]),
+                            .B(divisor),
+                            .remain_A({dividend_r[i][63:63- i + 1],dividend_r[i][31-i-1: 0]}),
+                            .S(S[31-i]),
+                            .new_A(dividend_w[i][63-i:31-i]),
+                            .old_A({dividend_w[i][63:63- i + 1],dividend_w[i][31-i-1: 0]}));
         end
     endgenerate
 
+    minus div_minor31(  .A(dividend_r[31][32:0]),
+                        .B(divisor),
+                        .remain_A(dividend_r[31][63: 33]),
+                        .S(S[0]),
+                        .new_A(dividend_w[31][32: 0]),
+                        .old_A(dividend_w[31][63:33]));
+    
     assign complete = (time_i == 6'd33);
 
     assign s[31:0] = s_sign ? ~S[31:0] + 32'b1 : S[31:0];
