@@ -13,6 +13,7 @@ module div_tb;
 	// Outputs
 	wire [31:0] s;
 	wire [31:0] r;
+	wire [63:0] div_total_result;
 	wire complete;
 
 	// Instantiate the Unit Under Test (UUT)
@@ -23,10 +24,12 @@ module div_tb;
 		.div_signed(div_signed), 
 		.x(x), 
 		.y(y), 
-		.s(s), 
-		.r(r), 
+		.div_total_result(div_total_result),
 		.complete(complete)
 	);
+
+	assign s = div_total_result[63:32];
+	assign r = div_total_result[31: 0];
 
 	initial begin
 		// Initialize Inputs
